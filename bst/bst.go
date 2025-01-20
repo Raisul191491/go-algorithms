@@ -45,3 +45,25 @@ func (n *BinaryTreeNode) PrintTree(node *BinaryTreeNode, prefix string, isLeft b
 	node.PrintTree(node.Left, prefix+(map[bool]string{true: "│   ", false: "    "}[isLeft]), true)
 	node.PrintTree(node.Right, prefix+(map[bool]string{true: "│   ", false: "    "}[isLeft]), false)
 }
+
+// InOrderTraversal performs in-order traversal of the BST and appends values to a slice
+func (n *BinaryTreeNode) InOrderTraversal(node *BinaryTreeNode, result *[]int) {
+	if node == nil {
+		return
+	}
+
+	// Traverse left subtree
+	node.InOrderTraversal(node.Left, result)
+
+	// Visit root node
+	*result = append(*result, node.Value)
+
+	// Traverse right subtree
+	node.InOrderTraversal(node.Right, result)
+}
+
+func (n *BinaryTreeNode) SortBST(root *BinaryTreeNode) []int {
+	var result []int
+	root.InOrderTraversal(root, &result)
+	return result
+}
